@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище Chizhik_IDZ_WebModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Connection">
+    <Key>
+      <PropertyRef Name="ConnectionID" />
+      <PropertyRef Name="OperatorID" />
+      <PropertyRef Name="SubscriberID" />
+      <PropertyRef Name="TariffID" />
+    </Key>
+    <Property Name="ConnectionID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ConnectionDate" Type="date" Nullable="false" />
+    <Property Name="PhoneNumb" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="OperatorID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="SubscriberID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="TariffID" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Operators">
+    <Key>
+      <PropertyRef Name="OperatorID" />
+    </Key>
+    <Property Name="OperatorID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="OperatorName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="Operators_Tariffs">
+    <Key>
+      <PropertyRef Name="OperatorID" />
+      <PropertyRef Name="TariffID" />
+    </Key>
+    <Property Name="OperatorID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="TariffID" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleCode" />
+    </Key>
+    <Property Name="RoleCode" Type="int" Nullable="false" />
+    <Property Name="RoleName" Type="nvarchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Subscribers">
+    <Key>
+      <PropertyRef Name="SubscriberID" />
+    </Key>
+    <Property Name="SubscriberID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Patronymic" Type="nvarchar" MaxLength="50" />
+    <Property Name="BirthDay" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Tariffs">
+    <Key>
+      <PropertyRef Name="TariffID" />
+    </Key>
+    <Property Name="TariffID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="TariffName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="MonthlyFee" Type="int" Nullable="false" />
+    <Property Name="Time_Calculation_method" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Cost_on_network_Calls" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Cost_long_distance_Calls" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Cost_local_Calls" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Cost_on_network_SMS" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Cost_local_SMS" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Cost_long_distance_SMS" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="InternetGB" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PasswordHash" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="Salt" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="UserRole" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Connection_Operators">
+    <End Role="Operators" Type="Self.Operators" Multiplicity="1" />
+    <End Role="Connection" Type="Self.Connection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Operators">
+        <PropertyRef Name="OperatorID" />
+      </Principal>
+      <Dependent Role="Connection">
+        <PropertyRef Name="OperatorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Connection_Subscribers">
+    <End Role="Subscribers" Type="Self.Subscribers" Multiplicity="1" />
+    <End Role="Connection" Type="Self.Connection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subscribers">
+        <PropertyRef Name="SubscriberID" />
+      </Principal>
+      <Dependent Role="Connection">
+        <PropertyRef Name="SubscriberID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Connection_Tariffs">
+    <End Role="Tariffs" Type="Self.Tariffs" Multiplicity="1" />
+    <End Role="Connection" Type="Self.Connection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tariffs">
+        <PropertyRef Name="TariffID" />
+      </Principal>
+      <Dependent Role="Connection">
+        <PropertyRef Name="TariffID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Operators_Tariffs_Operators">
+    <End Role="Operators" Type="Self.Operators" Multiplicity="1" />
+    <End Role="Operators_Tariffs" Type="Self.Operators_Tariffs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Operators">
+        <PropertyRef Name="OperatorID" />
+      </Principal>
+      <Dependent Role="Operators_Tariffs">
+        <PropertyRef Name="OperatorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Operators_Tariffs_Tariffs">
+    <End Role="Tariffs" Type="Self.Tariffs" Multiplicity="1" />
+    <End Role="Operators_Tariffs" Type="Self.Operators_Tariffs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tariffs">
+        <PropertyRef Name="TariffID" />
+      </Principal>
+      <Dependent Role="Operators_Tariffs">
+        <PropertyRef Name="TariffID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleCode" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="UserRole" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище Chizhik_IDZ_WebModelContainer">
+    <EntitySet Name="Connection" EntityType="Self.Connection" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Operators" EntityType="Self.Operators" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Operators_Tariffs" EntityType="Self.Operators_Tariffs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Subscribers" EntityType="Self.Subscribers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tariffs" EntityType="Self.Tariffs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Connection_Operators" Association="Self.FK_Connection_Operators">
+      <End Role="Operators" EntitySet="Operators" />
+      <End Role="Connection" EntitySet="Connection" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Connection_Subscribers" Association="Self.FK_Connection_Subscribers">
+      <End Role="Subscribers" EntitySet="Subscribers" />
+      <End Role="Connection" EntitySet="Connection" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Connection_Tariffs" Association="Self.FK_Connection_Tariffs">
+      <End Role="Tariffs" EntitySet="Tariffs" />
+      <End Role="Connection" EntitySet="Connection" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Operators_Tariffs_Operators" Association="Self.FK_Operators_Tariffs_Operators">
+      <End Role="Operators" EntitySet="Operators" />
+      <End Role="Operators_Tariffs" EntitySet="Operators_Tariffs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Operators_Tariffs_Tariffs" Association="Self.FK_Operators_Tariffs_Tariffs">
+      <End Role="Tariffs" EntitySet="Tariffs" />
+      <End Role="Operators_Tariffs" EntitySet="Operators_Tariffs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,43 @@
+﻿@model List<SubscriberBase.Entities.Operators>
+@{
+    ViewBag.Title = "ListOfOperators";
+}
+
+<h2>Список операторов</h2>
+@if (User.Identity.IsAuthenticated)
+{
+    if (User.IsInRole("Operator"))
+    {
+        @Html.ActionLink("К списку абонентов", "ListOfSubscribers", "Main", new { @class = "btn btn-default" })
+        @Html.ActionLink("Добавить подключение", "CreateConnection", "Main", new { @class = "btn btn-default" })
+        @Html.ActionLink("Добавить подключение с абонентом", "CreatePerConnect", "Main", new { @class = "btn btn-default" })
+    }
+
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th class="text-center"></th>
+            <th class="text-center"></th>
+            <th class="text-center"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var Operators in Model)
+        {
+            <tr class="text-center">
+                @*<td>@Operators.OperatorName</td>*@
+                <td>
+                    @Html.ActionLink(@Operators.OperatorName, "OperatorDetails", "Main"
+               , new { ID = Operators.OperatorID }, null)
+                </td>
+                <td>
+                    @Html.ActionLink("Тарифы", "ListOfTariffs", "Main"
+                   , new { ID = Operators.OperatorID }, null)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

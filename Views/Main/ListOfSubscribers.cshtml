@@ -1,0 +1,31 @@
+﻿@model List<SubscriberBase.Entities.Subscribers>
+@{
+    ViewBag.Title = "ListOfSubscribers";
+}
+
+<h2>Список абонентов</h2>
+@Html.ActionLink("Добавить абонента", "CreatePerson", "Main", new { @class = "btn btn-default" })
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th class="text-center"></th>
+            <th class="text-center"></th>
+            <th class="text-center"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var People in Model)
+        {
+            <tr class="text-center">
+                @*<td>@Operators.OperatorName</td>*@
+                <td>@People.Surname @People.Name @People.Patronymic</td>
+                <td>@Html.ActionLink("Редактировать", "EditPerson", "Main"
+                   , new { ID = People.SubscriberID }, null)</td>
+                <td>@Html.ActionLink("Удалить", "DeletePerson", "Main"
+                   , new { ID = People.SubscriberID }, null)</td>
+            </tr>
+        }
+    </tbody>
+</table>

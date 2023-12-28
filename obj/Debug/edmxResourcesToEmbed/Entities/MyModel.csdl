@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Chizhik_IDZModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Абоненты">
+    <Key>
+      <PropertyRef Name="ID_абонента" />
+    </Key>
+    <Property Name="ID_абонента" Type="Guid" Nullable="false" />
+    <Property Name="Фамилия" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Имя" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Отчество" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Дата_рождения" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Подключение" Relationship="Self.Подключение_абонента" FromRole="Абоненты" ToRole="Подключение" />
+  </EntityType>
+  <EntityType Name="Операторы">
+    <Key>
+      <PropertyRef Name="ID_оператора" />
+    </Key>
+    <Property Name="ID_оператора" Type="Guid" Nullable="false" />
+    <Property Name="Название" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Подключение" Relationship="Self.Оператор___подключение" FromRole="Операторы" ToRole="Подключение" />
+    <NavigationProperty Name="Тарифы" Relationship="Self.Операторы_Тарифы" FromRole="Операторы" ToRole="Тарифы" />
+  </EntityType>
+  <EntityType Name="Подключение">
+    <Key>
+      <PropertyRef Name="ID_подключения" />
+      <PropertyRef Name="ID_оператора" />
+      <PropertyRef Name="ID_абонента" />
+    </Key>
+    <Property Name="ID_подключения" Type="Guid" Nullable="false" />
+    <Property Name="Дата_подключения" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Номер_телефона" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ID_оператора" Type="Guid" Nullable="false" />
+    <Property Name="ID_абонента" Type="Guid" Nullable="false" />
+    <Property Name="ID_тарифа" Type="Guid" Nullable="false" />
+    <NavigationProperty Name="Абоненты" Relationship="Self.Подключение_абонента" FromRole="Подключение" ToRole="Абоненты" />
+    <NavigationProperty Name="Операторы" Relationship="Self.Оператор___подключение" FromRole="Подключение" ToRole="Операторы" />
+    <NavigationProperty Name="Тарифы" Relationship="Self.Подключение___тарифы" FromRole="Подключение" ToRole="Тарифы" />
+  </EntityType>
+  <EntityType Name="Тарифы">
+    <Key>
+      <PropertyRef Name="ID_тарифа" />
+    </Key>
+    <Property Name="ID_тарифа" Type="Guid" Nullable="false" />
+    <Property Name="Название_тарифа" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Абонентская_плата" Type="Int32" Nullable="false" />
+    <Property Name="Тип_подсчета_времени" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Стоимость_звонков_внутри_сети" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Стоимость_звонков_по_области" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Стоимость_звонков_в_другой_регион" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Стоимость_СМС_внутри_сети" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Стоимость_СМС_по_области" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Стоимость_СМС_в_другой_регион" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Количество_ГБ_интернета" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Подключение" Relationship="Self.Подключение___тарифы" FromRole="Тарифы" ToRole="Подключение" />
+    <NavigationProperty Name="Операторы" Relationship="Self.Операторы_Тарифы" FromRole="Тарифы" ToRole="Операторы" />
+    <NavigationProperty Name="Услуги" Relationship="Self.Услуги_Тарифы" FromRole="Тарифы" ToRole="Услуги" />
+  </EntityType>
+  <EntityType Name="Услуги">
+    <Key>
+      <PropertyRef Name="ID_услуги" />
+    </Key>
+    <Property Name="ID_услуги" Type="Guid" Nullable="false" />
+    <Property Name="Название" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Описание" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Срок_действия__до_" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Стоимость" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Подключение_Услуги" Relationship="Self.FK_Подключение_Услуги_Услуги" FromRole="Услуги" ToRole="Подключение_Услуги" />
+    <NavigationProperty Name="Тарифы" Relationship="Self.Услуги_Тарифы" FromRole="Услуги" ToRole="Тарифы" />
+  </EntityType>
+  <EntityType Name="Подключение_Услуги">
+    <Key>
+      <PropertyRef Name="ID_подключения" />
+      <PropertyRef Name="ID_оператора" />
+      <PropertyRef Name="ID_абонента" />
+    </Key>
+    <Property Name="ID_подключения" Type="Guid" Nullable="false" />
+    <Property Name="ID_оператора" Type="Guid" Nullable="false" />
+    <Property Name="ID_абонента" Type="Guid" Nullable="false" />
+    <Property Name="ID_услуги" Type="Guid" />
+    <NavigationProperty Name="Услуги" Relationship="Self.FK_Подключение_Услуги_Услуги" FromRole="Подключение_Услуги" ToRole="Услуги" />
+  </EntityType>
+  <EntityType Name="Тарифы_и_операторы">
+    <Key>
+      <PropertyRef Name="Название_оператора" />
+      <PropertyRef Name="Название_тарифа" />
+    </Key>
+    <Property Name="Название_оператора" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Название_тарифа" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Услуги_подключений">
+    <Key>
+      <PropertyRef Name="Фамилия_абонента" />
+      <PropertyRef Name="Номер_телефона" />
+      <PropertyRef Name="Название_услуги" />
+    </Key>
+    <Property Name="Фамилия_абонента" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Номер_телефона" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Название_услуги" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <Association Name="Подключение_абонента">
+    <End Role="Абоненты" Type="Self.Абоненты" Multiplicity="1" />
+    <End Role="Подключение" Type="Self.Подключение" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Абоненты">
+        <PropertyRef Name="ID_абонента" />
+      </Principal>
+      <Dependent Role="Подключение">
+        <PropertyRef Name="ID_абонента" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Оператор___подключение">
+    <End Role="Операторы" Type="Self.Операторы" Multiplicity="1" />
+    <End Role="Подключение" Type="Self.Подключение" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Операторы">
+        <PropertyRef Name="ID_оператора" />
+      </Principal>
+      <Dependent Role="Подключение">
+        <PropertyRef Name="ID_оператора" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Подключение___тарифы">
+    <End Role="Тарифы" Type="Self.Тарифы" Multiplicity="1" />
+    <End Role="Подключение" Type="Self.Подключение" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Тарифы">
+        <PropertyRef Name="ID_тарифа" />
+      </Principal>
+      <Dependent Role="Подключение">
+        <PropertyRef Name="ID_тарифа" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Подключение_Услуги_Услуги">
+    <End Role="Услуги" Type="Self.Услуги" Multiplicity="0..1" />
+    <End Role="Подключение_Услуги" Type="Self.Подключение_Услуги" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Услуги">
+        <PropertyRef Name="ID_услуги" />
+      </Principal>
+      <Dependent Role="Подключение_Услуги">
+        <PropertyRef Name="ID_услуги" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Операторы_Тарифы">
+    <End Role="Операторы" Type="Self.Операторы" Multiplicity="*" />
+    <End Role="Тарифы" Type="Self.Тарифы" Multiplicity="*" />
+  </Association>
+  <Association Name="Услуги_Тарифы">
+    <End Role="Тарифы" Type="Self.Тарифы" Multiplicity="*" />
+    <End Role="Услуги" Type="Self.Услуги" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="Chizhik_IDZEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Абоненты" EntityType="Self.Абоненты" />
+    <EntitySet Name="Операторы" EntityType="Self.Операторы" />
+    <EntitySet Name="Подключение" EntityType="Self.Подключение" />
+    <EntitySet Name="Тарифы" EntityType="Self.Тарифы" />
+    <EntitySet Name="Услуги" EntityType="Self.Услуги" />
+    <EntitySet Name="Подключение_Услуги" EntityType="Self.Подключение_Услуги" />
+    <EntitySet Name="Тарифы_и_операторы" EntityType="Self.Тарифы_и_операторы" />
+    <EntitySet Name="Услуги_подключений" EntityType="Self.Услуги_подключений" />
+    <AssociationSet Name="Подключение_абонента" Association="Self.Подключение_абонента">
+      <End Role="Абоненты" EntitySet="Абоненты" />
+      <End Role="Подключение" EntitySet="Подключение" />
+    </AssociationSet>
+    <AssociationSet Name="Оператор___подключение" Association="Self.Оператор___подключение">
+      <End Role="Операторы" EntitySet="Операторы" />
+      <End Role="Подключение" EntitySet="Подключение" />
+    </AssociationSet>
+    <AssociationSet Name="Подключение___тарифы" Association="Self.Подключение___тарифы">
+      <End Role="Тарифы" EntitySet="Тарифы" />
+      <End Role="Подключение" EntitySet="Подключение" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Подключение_Услуги_Услуги" Association="Self.FK_Подключение_Услуги_Услуги">
+      <End Role="Услуги" EntitySet="Услуги" />
+      <End Role="Подключение_Услуги" EntitySet="Подключение_Услуги" />
+    </AssociationSet>
+    <AssociationSet Name="Операторы_Тарифы" Association="Self.Операторы_Тарифы">
+      <End Role="Операторы" EntitySet="Операторы" />
+      <End Role="Тарифы" EntitySet="Тарифы" />
+    </AssociationSet>
+    <AssociationSet Name="Услуги_Тарифы" Association="Self.Услуги_Тарифы">
+      <End Role="Тарифы" EntitySet="Тарифы" />
+      <End Role="Услуги" EntitySet="Услуги" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(Chizhik_IDZModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(Chizhik_IDZModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+    <FunctionImport Name="UpdateSubscriberPhoneNumber">
+      <Parameter Name="LastName" Mode="In" Type="String" />
+      <Parameter Name="BirthDay" Mode="In" Type="DateTime" />
+      <Parameter Name="NewPhoneNumber" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>

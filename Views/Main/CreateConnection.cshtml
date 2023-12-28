@@ -1,0 +1,62 @@
+﻿@model SubscriberBase.ViewModels.ConnectionVM
+
+@{
+    ViewBag.Title = "CreateConnection";
+}
+
+<h2>CreateConnection</h2>
+
+@using (Html.BeginForm("CreateConnection", "Main", FormMethod.Post)) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>Connection</h4>
+    <hr />
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    <label for="ConnectionDate">Дата подключения</label>
+    <input class="form-control text-box single-line" id="ConnectionDay" name="ConnectionDay" type="date" value="">
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PhoneNumb, "Номер телефона", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(ConnectionVM => ConnectionVM.PhoneNumb, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(ConnectionVM => ConnectionVM.PhoneNumb, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.OperatorID, "Оператор", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.OperatorID, ViewBag.OperatorsList as SelectList, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.OperatorID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TariffID, "Тариф", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.TariffID, ViewBag.TariffsList as SelectList, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.TariffID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SubscriberID, "Абонент", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.SubscriberID, ViewBag.SubscribersList as SelectList, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.SubscriberID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

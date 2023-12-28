@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище Chizhik_IDZModelContainer" CdmEntityContainer="Chizhik_IDZEntities">
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="Chizhik_IDZModel.sysdiagrams">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Абоненты">
+      <EntityTypeMapping TypeName="Chizhik_IDZModel.Абоненты">
+        <MappingFragment StoreEntitySet="Абоненты">
+          <ScalarProperty Name="ID_абонента" ColumnName="ID абонента" />
+          <ScalarProperty Name="Фамилия" ColumnName="Фамилия" />
+          <ScalarProperty Name="Имя" ColumnName="Имя" />
+          <ScalarProperty Name="Отчество" ColumnName="Отчество" />
+          <ScalarProperty Name="Дата_рождения" ColumnName="Дата рождения" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Операторы">
+      <EntityTypeMapping TypeName="Chizhik_IDZModel.Операторы">
+        <MappingFragment StoreEntitySet="Операторы">
+          <ScalarProperty Name="ID_оператора" ColumnName="ID оператора" />
+          <ScalarProperty Name="Название" ColumnName="Название" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Подключение">
+      <EntityTypeMapping TypeName="Chizhik_IDZModel.Подключение">
+        <MappingFragment StoreEntitySet="Подключение">
+          <ScalarProperty Name="ID_подключения" ColumnName="ID подключения" />
+          <ScalarProperty Name="Дата_подключения" ColumnName="Дата подключения" />
+          <ScalarProperty Name="Номер_телефона" ColumnName="Номер телефона" />
+          <ScalarProperty Name="ID_оператора" ColumnName="ID оператора" />
+          <ScalarProperty Name="ID_абонента" ColumnName="ID абонента" />
+          <ScalarProperty Name="ID_тарифа" ColumnName="ID тарифа" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Тарифы">
+      <EntityTypeMapping TypeName="Chizhik_IDZModel.Тарифы">
+        <MappingFragment StoreEntitySet="Тарифы">
+          <ScalarProperty Name="ID_тарифа" ColumnName="ID тарифа" />
+          <ScalarProperty Name="Название_тарифа" ColumnName="Название тарифа" />
+          <ScalarProperty Name="Абонентская_плата" ColumnName="Абонентская плата" />
+          <ScalarProperty Name="Тип_подсчета_времени" ColumnName="Тип подсчета времени" />
+          <ScalarProperty Name="Стоимость_звонков_внутри_сети" ColumnName="Стоимость звонков внутри сети" />
+          <ScalarProperty Name="Стоимость_звонков_по_области" ColumnName="Стоимость звонков по области" />
+          <ScalarProperty Name="Стоимость_звонков_в_другой_регион" ColumnName="Стоимость звонков в другой регион" />
+          <ScalarProperty Name="Стоимость_СМС_внутри_сети" ColumnName="Стоимость СМС внутри сети" />
+          <ScalarProperty Name="Стоимость_СМС_по_области" ColumnName="Стоимость СМС по области" />
+          <ScalarProperty Name="Стоимость_СМС_в_другой_регион" ColumnName="Стоимость СМС в другой регион" />
+          <ScalarProperty Name="Количество_ГБ_интернета" ColumnName="Количество ГБ интернета" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Услуги">
+      <EntityTypeMapping TypeName="Chizhik_IDZModel.Услуги">
+        <MappingFragment StoreEntitySet="Услуги">
+          <ScalarProperty Name="ID_услуги" ColumnName="ID услуги" />
+          <ScalarProperty Name="Название" ColumnName="Название" />
+          <ScalarProperty Name="Описание" ColumnName="Описание" />
+          <ScalarProperty Name="Срок_действия__до_" ColumnName="Срок действия (до)" />
+          <ScalarProperty Name="Стоимость" ColumnName="Стоимость" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Подключение_Услуги">
+      <EntityTypeMapping TypeName="Chizhik_IDZModel.Подключение_Услуги">
+        <MappingFragment StoreEntitySet="Подключение_Услуги">
+          <ScalarProperty Name="ID_подключения" ColumnName="ID подключения" />
+          <ScalarProperty Name="ID_оператора" ColumnName="ID оператора" />
+          <ScalarProperty Name="ID_абонента" ColumnName="ID абонента" />
+          <ScalarProperty Name="ID_услуги" ColumnName="ID услуги" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Тарифы_и_операторы">
+      <EntityTypeMapping TypeName="Chizhik_IDZModel.Тарифы_и_операторы">
+        <MappingFragment StoreEntitySet="Тарифы и операторы">
+          <ScalarProperty Name="Название_оператора" ColumnName="Название оператора" />
+          <ScalarProperty Name="Название_тарифа" ColumnName="Название тарифа" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Услуги_подключений">
+      <EntityTypeMapping TypeName="Chizhik_IDZModel.Услуги_подключений">
+        <MappingFragment StoreEntitySet="Услуги подключений">
+          <ScalarProperty Name="Фамилия_абонента" ColumnName="Фамилия абонента" />
+          <ScalarProperty Name="Номер_телефона" ColumnName="Номер телефона" />
+          <ScalarProperty Name="Название_услуги" ColumnName="Название услуги" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="Операторы_Тарифы" TypeName="Chizhik_IDZModel.Операторы_Тарифы" StoreEntitySet="Операторы_Тарифы">
+      <EndProperty Name="Операторы">
+        <ScalarProperty Name="ID_оператора" ColumnName="ID оператора" />
+      </EndProperty>
+      <EndProperty Name="Тарифы">
+        <ScalarProperty Name="ID_тарифа" ColumnName="ID тарифа" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="Услуги_Тарифы" TypeName="Chizhik_IDZModel.Услуги_Тарифы" StoreEntitySet="Услуги_Тарифы">
+      <EndProperty Name="Тарифы">
+        <ScalarProperty Name="ID_тарифа" ColumnName="ID тарифа" />
+      </EndProperty>
+      <EndProperty Name="Услуги">
+        <ScalarProperty Name="ID_услуги" ColumnName="ID услуги" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Хранилище Chizhik_IDZModel.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Хранилище Chizhik_IDZModel.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Хранилище Chizhik_IDZModel.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Хранилище Chizhik_IDZModel.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Chizhik_IDZModel.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Хранилище Chizhik_IDZModel.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Chizhik_IDZModel.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Хранилище Chizhik_IDZModel.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Хранилище Chizhik_IDZModel.sp_upgraddiagrams" />
+    <FunctionImportMapping FunctionImportName="UpdateSubscriberPhoneNumber" FunctionName="Хранилище Chizhik_IDZModel.UpdateSubscriberPhoneNumber" />
+  </EntityContainerMapping>
+</Mapping>

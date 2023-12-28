@@ -1,0 +1,98 @@
+﻿@model SubscriberBase.Entities.Tariffs
+
+@{
+    ViewBag.Title = "TariffDetails";
+}
+
+<h2>TariffDetails</h2>
+
+<div>
+    <h4>Tariffs</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TariffName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TariffName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MonthlyFee)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MonthlyFee)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Time_Calculation_method)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Time_Calculation_method)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cost_on_network_Calls)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cost_on_network_Calls)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cost_long_distance_Calls)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cost_long_distance_Calls)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cost_local_Calls)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cost_local_Calls)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cost_on_network_SMS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cost_on_network_SMS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cost_local_SMS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cost_local_SMS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cost_long_distance_SMS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cost_long_distance_SMS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InternetGB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InternetGB)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TariffID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

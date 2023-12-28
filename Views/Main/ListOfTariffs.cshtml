@@ -1,0 +1,28 @@
+﻿@model List<SubscriberBase.Entities.Tariffs>
+@{
+    ViewBag.Title = "ListOfTariffs";
+}
+
+<h2>ListOfTariffs</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th class="text-center"></th>
+            <th class="text-center"></th>
+            <th class="text-center"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var Tariffs in Model)
+        {
+            <tr class="text-center">
+                @*<td>@Operators.OperatorName</td>*@
+                <td>
+                    @Html.ActionLink(Tariffs.TariffName, "TariffDetails", "Main"
+               , new { ID = Tariffs.TariffID }, null)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,483 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище Chizhik_IDZ_WebModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Connection">
+          <Key>
+            <PropertyRef Name="ConnectionID" />
+            <PropertyRef Name="OperatorID" />
+            <PropertyRef Name="SubscriberID" />
+            <PropertyRef Name="TariffID" />
+          </Key>
+          <Property Name="ConnectionID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ConnectionDate" Type="date" Nullable="false" />
+          <Property Name="PhoneNumb" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="OperatorID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="SubscriberID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TariffID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Operators">
+          <Key>
+            <PropertyRef Name="OperatorID" />
+          </Key>
+          <Property Name="OperatorID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OperatorName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Operators_Tariffs">
+          <Key>
+            <PropertyRef Name="OperatorID" />
+            <PropertyRef Name="TariffID" />
+          </Key>
+          <Property Name="OperatorID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TariffID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleCode" />
+          </Key>
+          <Property Name="RoleCode" Type="int" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Subscribers">
+          <Key>
+            <PropertyRef Name="SubscriberID" />
+          </Key>
+          <Property Name="SubscriberID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Patronymic" Type="nvarchar" MaxLength="50" />
+          <Property Name="BirthDay" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Tariffs">
+          <Key>
+            <PropertyRef Name="TariffID" />
+          </Key>
+          <Property Name="TariffID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TariffName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MonthlyFee" Type="int" Nullable="false" />
+          <Property Name="Time_Calculation_method" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Cost_on_network_Calls" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Cost_long_distance_Calls" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Cost_local_Calls" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Cost_on_network_SMS" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Cost_local_SMS" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Cost_long_distance_SMS" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="InternetGB" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Salt" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserRole" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Connection_Operators">
+          <End Role="Operators" Type="Self.Operators" Multiplicity="1" />
+          <End Role="Connection" Type="Self.Connection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operators">
+              <PropertyRef Name="OperatorID" />
+            </Principal>
+            <Dependent Role="Connection">
+              <PropertyRef Name="OperatorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Connection_Subscribers">
+          <End Role="Subscribers" Type="Self.Subscribers" Multiplicity="1" />
+          <End Role="Connection" Type="Self.Connection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subscribers">
+              <PropertyRef Name="SubscriberID" />
+            </Principal>
+            <Dependent Role="Connection">
+              <PropertyRef Name="SubscriberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Connection_Tariffs">
+          <End Role="Tariffs" Type="Self.Tariffs" Multiplicity="1" />
+          <End Role="Connection" Type="Self.Connection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tariffs">
+              <PropertyRef Name="TariffID" />
+            </Principal>
+            <Dependent Role="Connection">
+              <PropertyRef Name="TariffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Operators_Tariffs_Operators">
+          <End Role="Operators" Type="Self.Operators" Multiplicity="1" />
+          <End Role="Operators_Tariffs" Type="Self.Operators_Tariffs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operators">
+              <PropertyRef Name="OperatorID" />
+            </Principal>
+            <Dependent Role="Operators_Tariffs">
+              <PropertyRef Name="OperatorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Operators_Tariffs_Tariffs">
+          <End Role="Tariffs" Type="Self.Tariffs" Multiplicity="1" />
+          <End Role="Operators_Tariffs" Type="Self.Operators_Tariffs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tariffs">
+              <PropertyRef Name="TariffID" />
+            </Principal>
+            <Dependent Role="Operators_Tariffs">
+              <PropertyRef Name="TariffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleCode" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище Chizhik_IDZ_WebModelContainer">
+          <EntitySet Name="Connection" EntityType="Self.Connection" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Operators" EntityType="Self.Operators" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Operators_Tariffs" EntityType="Self.Operators_Tariffs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subscribers" EntityType="Self.Subscribers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tariffs" EntityType="Self.Tariffs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Connection_Operators" Association="Self.FK_Connection_Operators">
+            <End Role="Operators" EntitySet="Operators" />
+            <End Role="Connection" EntitySet="Connection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Connection_Subscribers" Association="Self.FK_Connection_Subscribers">
+            <End Role="Subscribers" EntitySet="Subscribers" />
+            <End Role="Connection" EntitySet="Connection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Connection_Tariffs" Association="Self.FK_Connection_Tariffs">
+            <End Role="Tariffs" EntitySet="Tariffs" />
+            <End Role="Connection" EntitySet="Connection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Operators_Tariffs_Operators" Association="Self.FK_Operators_Tariffs_Operators">
+            <End Role="Operators" EntitySet="Operators" />
+            <End Role="Operators_Tariffs" EntitySet="Operators_Tariffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Operators_Tariffs_Tariffs" Association="Self.FK_Operators_Tariffs_Tariffs">
+            <End Role="Tariffs" EntitySet="Tariffs" />
+            <End Role="Operators_Tariffs" EntitySet="Operators_Tariffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Chizhik_IDZ_WebModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Connection">
+          <Key>
+            <PropertyRef Name="ConnectionID" />
+            <PropertyRef Name="OperatorID" />
+            <PropertyRef Name="TariffID" />
+            <PropertyRef Name="SubscriberID" />
+          </Key>
+          <Property Name="ConnectionID" Type="Guid" Nullable="false" />
+          <Property Name="ConnectionDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PhoneNumb" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OperatorID" Type="Guid" Nullable="false" />
+          <Property Name="TariffID" Type="Guid" Nullable="false" />
+          <Property Name="SubscriberID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Operators" Relationship="Self.FK_Connection_Operators" FromRole="Connection" ToRole="Operators" />
+          <NavigationProperty Name="Subscribers" Relationship="Self.FK_Connection_Subscribers" FromRole="Connection" ToRole="Subscribers" />
+          <NavigationProperty Name="Tariffs" Relationship="Self.FK_Connection_Tariffs" FromRole="Connection" ToRole="Tariffs" />
+        </EntityType>
+        <EntityType Name="Operators">
+          <Key>
+            <PropertyRef Name="OperatorID" />
+          </Key>
+          <Property Name="OperatorID" Type="Guid" Nullable="false" />
+          <Property Name="OperatorName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Connection" Relationship="Self.FK_Connection_Operators" FromRole="Operators" ToRole="Connection" />
+          <NavigationProperty Name="Tariffs" Relationship="Self.Operators_Tariffs" FromRole="Operators" ToRole="Tariffs" />
+        </EntityType>
+        <EntityType Name="Subscribers">
+          <Key>
+            <PropertyRef Name="SubscriberID" />
+          </Key>
+          <Property Name="SubscriberID" Type="Guid" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BirthDay" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Connection" Relationship="Self.FK_Connection_Subscribers" FromRole="Subscribers" ToRole="Connection" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Tariffs">
+          <Key>
+            <PropertyRef Name="TariffID" />
+          </Key>
+          <Property Name="TariffID" Type="Guid" Nullable="false" />
+          <Property Name="TariffName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MonthlyFee" Type="Int32" Nullable="false" />
+          <Property Name="Time_Calculation_method" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Cost_on_network_Calls" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Cost_long_distance_Calls" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Cost_local_Calls" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Cost_on_network_SMS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Cost_local_SMS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Cost_long_distance_SMS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="InternetGB" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Connection" Relationship="Self.FK_Connection_Tariffs" FromRole="Tariffs" ToRole="Connection" />
+          <NavigationProperty Name="Operators" Relationship="Self.Operators_Tariffs" FromRole="Tariffs" ToRole="Operators" />
+        </EntityType>
+        <Association Name="FK_Connection_Operators">
+          <End Role="Operators" Type="Self.Operators" Multiplicity="1" />
+          <End Role="Connection" Type="Self.Connection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operators">
+              <PropertyRef Name="OperatorID" />
+            </Principal>
+            <Dependent Role="Connection">
+              <PropertyRef Name="OperatorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Connection_Subscribers">
+          <End Role="Subscribers" Type="Self.Subscribers" Multiplicity="1" />
+          <End Role="Connection" Type="Self.Connection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subscribers">
+              <PropertyRef Name="SubscriberID" />
+            </Principal>
+            <Dependent Role="Connection">
+              <PropertyRef Name="SubscriberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Connection_Tariffs">
+          <End Role="Tariffs" Type="Self.Tariffs" Multiplicity="1" />
+          <End Role="Connection" Type="Self.Connection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tariffs">
+              <PropertyRef Name="TariffID" />
+            </Principal>
+            <Dependent Role="Connection">
+              <PropertyRef Name="TariffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Operators_Tariffs">
+          <End Role="Operators" Type="Self.Operators" Multiplicity="*" />
+          <End Role="Tariffs" Type="Self.Tariffs" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="Chizhik_IDZ_WebEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Connection" EntityType="Self.Connection" />
+          <EntitySet Name="Operators" EntityType="Self.Operators" />
+          <EntitySet Name="Subscribers" EntityType="Self.Subscribers" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Tariffs" EntityType="Self.Tariffs" />
+          <AssociationSet Name="FK_Connection_Operators" Association="Self.FK_Connection_Operators">
+            <End Role="Operators" EntitySet="Operators" />
+            <End Role="Connection" EntitySet="Connection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Connection_Subscribers" Association="Self.FK_Connection_Subscribers">
+            <End Role="Subscribers" EntitySet="Subscribers" />
+            <End Role="Connection" EntitySet="Connection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Connection_Tariffs" Association="Self.FK_Connection_Tariffs">
+            <End Role="Tariffs" EntitySet="Tariffs" />
+            <End Role="Connection" EntitySet="Connection" />
+          </AssociationSet>
+          <AssociationSet Name="Operators_Tariffs" Association="Self.Operators_Tariffs">
+            <End Role="Operators" EntitySet="Operators" />
+            <End Role="Tariffs" EntitySet="Tariffs" />
+          </AssociationSet>
+          <EntitySet Name="Role" EntityType="Chizhik_IDZ_WebModel.Role" />
+          <EntitySet Name="User" EntityType="Chizhik_IDZ_WebModel.User" />
+          <AssociationSet Name="FK_User_Role" Association="Chizhik_IDZ_WebModel.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleCode" />
+          </Key>
+          <Property Name="RoleCode" Type="Int32" Nullable="false" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="Chizhik_IDZ_WebModel.FK_User_Role" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordHash" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Salt" Type="Guid" Nullable="false" />
+          <Property Name="UserRole" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="Chizhik_IDZ_WebModel.FK_User_Role" FromRole="User" ToRole="Role" />
+        </EntityType>
+        <Association Name="FK_User_Role">
+          <End Type="Chizhik_IDZ_WebModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="Chizhik_IDZ_WebModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleCode" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище Chizhik_IDZ_WebModelContainer" CdmEntityContainer="Chizhik_IDZ_WebEntities">
+          <EntitySetMapping Name="Connection">
+            <EntityTypeMapping TypeName="Chizhik_IDZ_WebModel.Connection">
+              <MappingFragment StoreEntitySet="Connection">
+                <ScalarProperty Name="ConnectionID" ColumnName="ConnectionID" />
+                <ScalarProperty Name="ConnectionDate" ColumnName="ConnectionDate" />
+                <ScalarProperty Name="PhoneNumb" ColumnName="PhoneNumb" />
+                <ScalarProperty Name="OperatorID" ColumnName="OperatorID" />
+                <ScalarProperty Name="TariffID" ColumnName="TariffID" />
+                <ScalarProperty Name="SubscriberID" ColumnName="SubscriberID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Operators">
+            <EntityTypeMapping TypeName="Chizhik_IDZ_WebModel.Operators">
+              <MappingFragment StoreEntitySet="Operators">
+                <ScalarProperty Name="OperatorID" ColumnName="OperatorID" />
+                <ScalarProperty Name="OperatorName" ColumnName="OperatorName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subscribers">
+            <EntityTypeMapping TypeName="Chizhik_IDZ_WebModel.Subscribers">
+              <MappingFragment StoreEntitySet="Subscribers">
+                <ScalarProperty Name="SubscriberID" ColumnName="SubscriberID" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="BirthDay" ColumnName="BirthDay" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Chizhik_IDZ_WebModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tariffs">
+            <EntityTypeMapping TypeName="Chizhik_IDZ_WebModel.Tariffs">
+              <MappingFragment StoreEntitySet="Tariffs">
+                <ScalarProperty Name="TariffID" ColumnName="TariffID" />
+                <ScalarProperty Name="TariffName" ColumnName="TariffName" />
+                <ScalarProperty Name="MonthlyFee" ColumnName="MonthlyFee" />
+                <ScalarProperty Name="Time_Calculation_method" ColumnName="Time_Calculation_method" />
+                <ScalarProperty Name="Cost_on_network_Calls" ColumnName="Cost_on_network_Calls" />
+                <ScalarProperty Name="Cost_long_distance_Calls" ColumnName="Cost_long_distance_Calls" />
+                <ScalarProperty Name="Cost_local_Calls" ColumnName="Cost_local_Calls" />
+                <ScalarProperty Name="Cost_on_network_SMS" ColumnName="Cost_on_network_SMS" />
+                <ScalarProperty Name="Cost_local_SMS" ColumnName="Cost_local_SMS" />
+                <ScalarProperty Name="Cost_long_distance_SMS" ColumnName="Cost_long_distance_SMS" />
+                <ScalarProperty Name="InternetGB" ColumnName="InternetGB" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Operators_Tariffs" TypeName="Chizhik_IDZ_WebModel.Operators_Tariffs" StoreEntitySet="Operators_Tariffs">
+            <EndProperty Name="Operators">
+              <ScalarProperty Name="OperatorID" ColumnName="OperatorID" />
+            </EndProperty>
+            <EndProperty Name="Tariffs">
+              <ScalarProperty Name="TariffID" ColumnName="TariffID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="Chizhik_IDZ_WebModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleCode" ColumnName="RoleCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="Chizhik_IDZ_WebModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserRole" ColumnName="UserRole" />
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

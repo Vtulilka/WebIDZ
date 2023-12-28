@@ -1,0 +1,315 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище Chizhik_IDZModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Абоненты">
+    <Key>
+      <PropertyRef Name="ID абонента" />
+    </Key>
+    <Property Name="ID абонента" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Фамилия" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Имя" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Отчество" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Дата рождения" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Операторы">
+    <Key>
+      <PropertyRef Name="ID оператора" />
+    </Key>
+    <Property Name="ID оператора" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Название" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Операторы_Тарифы">
+    <Key>
+      <PropertyRef Name="ID оператора" />
+      <PropertyRef Name="ID тарифа" />
+    </Key>
+    <Property Name="ID оператора" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ID тарифа" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Подключение">
+    <Key>
+      <PropertyRef Name="ID подключения" />
+      <PropertyRef Name="ID оператора" />
+      <PropertyRef Name="ID абонента" />
+    </Key>
+    <Property Name="ID подключения" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Дата подключения" Type="date" Nullable="false" />
+    <Property Name="Номер телефона" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ID оператора" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ID абонента" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ID тарифа" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "Chizhik_IDZ.dbo.Подключение_Услуги" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+  <EntityType Name="Подключение_Услуги">
+    <Key>
+      <PropertyRef Name="ID подключения" />
+      <PropertyRef Name="ID оператора" />
+      <PropertyRef Name="ID абонента" />
+    </Key>
+    <Property Name="ID подключения" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ID оператора" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ID абонента" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ID услуги" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="Тарифы">
+    <Key>
+      <PropertyRef Name="ID тарифа" />
+    </Key>
+    <Property Name="ID тарифа" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Название тарифа" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Абонентская плата" Type="int" Nullable="false" />
+    <Property Name="Тип подсчета времени" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Стоимость звонков внутри сети" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Стоимость звонков по области" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Стоимость звонков в другой регион" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Стоимость СМС внутри сети" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Стоимость СМС по области" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Стоимость СМС в другой регион" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Количество ГБ интернета" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Услуги">
+    <Key>
+      <PropertyRef Name="ID услуги" />
+    </Key>
+    <Property Name="ID услуги" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Название" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Описание" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Срок действия (до)" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Стоимость" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Услуги_Тарифы">
+    <Key>
+      <PropertyRef Name="ID тарифа" />
+      <PropertyRef Name="ID услуги" />
+    </Key>
+    <Property Name="ID тарифа" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ID услуги" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "Chizhik_IDZ.dbo.Тарифы и операторы" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+  <EntityType Name="Тарифы и операторы">
+    <Key>
+      <PropertyRef Name="Название оператора" />
+      <PropertyRef Name="Название тарифа" />
+    </Key>
+    <Property Name="Название оператора" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Название тарифа" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "Chizhik_IDZ.dbo.Услуги подключений" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+  <EntityType Name="Услуги подключений">
+    <Key>
+      <PropertyRef Name="Фамилия абонента" />
+      <PropertyRef Name="Номер телефона" />
+      <PropertyRef Name="Название услуги" />
+    </Key>
+    <Property Name="Фамилия абонента" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Номер телефона" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Название услуги" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Подключение_Услуги_Услуги">
+    <End Role="Услуги" Type="Self.Услуги" Multiplicity="0..1" />
+    <End Role="Подключение_Услуги" Type="Self.Подключение_Услуги" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Услуги">
+        <PropertyRef Name="ID услуги" />
+      </Principal>
+      <Dependent Role="Подключение_Услуги">
+        <PropertyRef Name="ID услуги" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Оператор - подключение">
+    <End Role="Операторы" Type="Self.Операторы" Multiplicity="1" />
+    <End Role="Подключение" Type="Self.Подключение" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Операторы">
+        <PropertyRef Name="ID оператора" />
+      </Principal>
+      <Dependent Role="Подключение">
+        <PropertyRef Name="ID оператора" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Операторы - тарифы">
+    <End Role="Операторы" Type="Self.Операторы" Multiplicity="1" />
+    <End Role="Операторы_Тарифы" Type="Self.Операторы_Тарифы" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Операторы">
+        <PropertyRef Name="ID оператора" />
+      </Principal>
+      <Dependent Role="Операторы_Тарифы">
+        <PropertyRef Name="ID оператора" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Подключение - тарифы">
+    <End Role="Тарифы" Type="Self.Тарифы" Multiplicity="1" />
+    <End Role="Подключение" Type="Self.Подключение" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Тарифы">
+        <PropertyRef Name="ID тарифа" />
+      </Principal>
+      <Dependent Role="Подключение">
+        <PropertyRef Name="ID тарифа" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Подключение абонента">
+    <End Role="Абоненты" Type="Self.Абоненты" Multiplicity="1" />
+    <End Role="Подключение" Type="Self.Подключение" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Абоненты">
+        <PropertyRef Name="ID абонента" />
+      </Principal>
+      <Dependent Role="Подключение">
+        <PropertyRef Name="ID абонента" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Тарифы - операторы">
+    <End Role="Тарифы" Type="Self.Тарифы" Multiplicity="1" />
+    <End Role="Операторы_Тарифы" Type="Self.Операторы_Тарифы" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Тарифы">
+        <PropertyRef Name="ID тарифа" />
+      </Principal>
+      <Dependent Role="Операторы_Тарифы">
+        <PropertyRef Name="ID тарифа" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Тарифы - услуги">
+    <End Role="Тарифы" Type="Self.Тарифы" Multiplicity="1" />
+    <End Role="Услуги_Тарифы" Type="Self.Услуги_Тарифы" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Тарифы">
+        <PropertyRef Name="ID тарифа" />
+      </Principal>
+      <Dependent Role="Услуги_Тарифы">
+        <PropertyRef Name="ID тарифа" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Услуги - тарифы">
+    <End Role="Услуги" Type="Self.Услуги" Multiplicity="1" />
+    <End Role="Услуги_Тарифы" Type="Self.Услуги_Тарифы" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Услуги">
+        <PropertyRef Name="ID услуги" />
+      </Principal>
+      <Dependent Role="Услуги_Тарифы">
+        <PropertyRef Name="ID услуги" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="UpdateSubscriberPhoneNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="LastName" Type="nvarchar" Mode="In" />
+    <Parameter Name="BirthDay" Type="date" Mode="In" />
+    <Parameter Name="NewPhoneNumber" Type="nvarchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="Хранилище Chizhik_IDZModelContainer">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Абоненты" EntityType="Self.Абоненты" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Операторы" EntityType="Self.Операторы" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Операторы_Тарифы" EntityType="Self.Операторы_Тарифы" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Подключение" EntityType="Self.Подключение" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Тарифы" EntityType="Self.Тарифы" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Услуги" EntityType="Self.Услуги" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Услуги_Тарифы" EntityType="Self.Услуги_Тарифы" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Подключение_Услуги" EntityType="Self.Подключение_Услуги" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Подключение_Услуги].[ID подключения] AS [ID подключения], 
+    [Подключение_Услуги].[ID оператора] AS [ID оператора], 
+    [Подключение_Услуги].[ID абонента] AS [ID абонента], 
+    [Подключение_Услуги].[ID услуги] AS [ID услуги]
+    FROM [dbo].[Подключение_Услуги] AS [Подключение_Услуги]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="Тарифы и операторы" EntityType="Self.Тарифы и операторы" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Тарифы и операторы].[Название оператора] AS [Название оператора], 
+    [Тарифы и операторы].[Название тарифа] AS [Название тарифа]
+    FROM [dbo].[Тарифы и операторы] AS [Тарифы и операторы]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="Услуги подключений" EntityType="Self.Услуги подключений" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Услуги подключений].[Фамилия абонента] AS [Фамилия абонента], 
+    [Услуги подключений].[Номер телефона] AS [Номер телефона], 
+    [Услуги подключений].[Название услуги] AS [Название услуги]
+    FROM [dbo].[Услуги подключений] AS [Услуги подключений]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Подключение_Услуги_Услуги" Association="Self.FK_Подключение_Услуги_Услуги">
+      <End Role="Услуги" EntitySet="Услуги" />
+      <End Role="Подключение_Услуги" EntitySet="Подключение_Услуги" />
+    </AssociationSet>
+    <AssociationSet Name="Оператор - подключение" Association="Self.Оператор - подключение">
+      <End Role="Операторы" EntitySet="Операторы" />
+      <End Role="Подключение" EntitySet="Подключение" />
+    </AssociationSet>
+    <AssociationSet Name="Операторы - тарифы" Association="Self.Операторы - тарифы">
+      <End Role="Операторы" EntitySet="Операторы" />
+      <End Role="Операторы_Тарифы" EntitySet="Операторы_Тарифы" />
+    </AssociationSet>
+    <AssociationSet Name="Подключение - тарифы" Association="Self.Подключение - тарифы">
+      <End Role="Тарифы" EntitySet="Тарифы" />
+      <End Role="Подключение" EntitySet="Подключение" />
+    </AssociationSet>
+    <AssociationSet Name="Подключение абонента" Association="Self.Подключение абонента">
+      <End Role="Абоненты" EntitySet="Абоненты" />
+      <End Role="Подключение" EntitySet="Подключение" />
+    </AssociationSet>
+    <AssociationSet Name="Тарифы - операторы" Association="Self.Тарифы - операторы">
+      <End Role="Тарифы" EntitySet="Тарифы" />
+      <End Role="Операторы_Тарифы" EntitySet="Операторы_Тарифы" />
+    </AssociationSet>
+    <AssociationSet Name="Тарифы - услуги" Association="Self.Тарифы - услуги">
+      <End Role="Тарифы" EntitySet="Тарифы" />
+      <End Role="Услуги_Тарифы" EntitySet="Услуги_Тарифы" />
+    </AssociationSet>
+    <AssociationSet Name="Услуги - тарифы" Association="Self.Услуги - тарифы">
+      <End Role="Услуги" EntitySet="Услуги" />
+      <End Role="Услуги_Тарифы" EntitySet="Услуги_Тарифы" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
